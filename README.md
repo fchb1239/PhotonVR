@@ -6,21 +6,22 @@ A Unity Package containing all the necessary components to do VR networking with
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
 
-Start off by including Photon.VR;
+Start off by including Photon.VR
 ```cs
 using Photon.VR;
 ```
 
-Connecting to the servers:
+Connecting to the servers
 ```cs
 PhotonVRManager.Connect();
 ```
 
-Switching Photon servers:
+Switching Photon servers
 ```cs
 PhotonVRManager.ChangeServers("AppId", "VoiceAppId");
 ```
 
+Joining rooms
 ```cs
 // It will only join people on the same queue but the room codes themselves are random
 string queue = "Space";
@@ -29,6 +30,7 @@ int maxPlayers = 8;
 PhotonVRManager.JoinRandomRoom(queue, maxPlayers);
 ```
 
+Joining private rooms
 ```cs
 string roomCode = "1234";
 // Optional
@@ -36,7 +38,7 @@ int maxPlayers = 8;
 PhotonVRManagerJoinPrivateRoom(roomName, maxPlayers);
 ```
 
-Switching scenes:
+Switching scenes
 ```cs
 int sceneIndex = 1;
 // Optional

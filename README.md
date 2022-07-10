@@ -43,5 +43,5 @@ Switching scenes
 int sceneIndex = 1;
 // Optional
 int maxPlayers = 8;
-PhotonVRManager.ChangeServers(SceneIndex, maxPlayers);
+PhotonVRManager.SwitchScenes(SceneIndex, maxPlayers);
 ```

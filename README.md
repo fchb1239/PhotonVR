@@ -1,14 +1,23 @@
 # ![](Visuals/SmallerText.png)
 A Unity Package containing all the necessary components to do VR networking with [Photon](https://photonengine.com)
 
-![](https://user-images.githubusercontent.com/29258204/178152451-dc96ea62-ead2-4ee1-a23f-71c14a3765e1.png)
-
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
 
 You need to have [PUN 2](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922) and [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) in your project before importing this
 
-Start off by including Photon.VR
+Start off by going in Resources/PhotonVR/Prefabs and dragging everything in there into the scene.
+Put your Photon AppId into AppId and Photon Voice AppId itno VoiceAppId, then put in a region - the default is "eu".
+
+Then drag in your controllers and headset into Head, Left Hand and Right Hand - set the colour to the default colour.
+
+Set Default Queue to the queue you want to automatically load into when the game starts and set the Default Room Limit to the maximum amount of players you want in a default room.
+
+Connect On Awake makes it so when the game loads you instantly try to connect, Join Room On Connect makes it so it instantly joins the Default Queue with the Default Room Limit when you connect to the server.
+
+![](https://user-images.githubusercontent.com/29258204/178260207-79da9ffe-efbb-44cc-a648-1cd40900c82d.png)
+
+Including Photon.VR
 ```cs
 using Photon.VR;
 ```

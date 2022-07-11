@@ -6,6 +6,8 @@ A Unity Package containing all the necessary components to do VR networking with
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
 
+You need to have [PUN 2](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922) and [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) in your project before importing this
+
 Start off by including Photon.VR
 ```cs
 using Photon.VR;

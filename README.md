@@ -11,7 +11,11 @@ You also need TextMeshPro - that's built into unity, you just gotta go into the 
 
 
 Start off by going in Resources/PhotonVR/Prefabs and dragging everything in there into the scene.
-Put your Photon AppId into AppId and Photon Voice AppId itno VoiceAppId, then put in a region - the default is "eu".
+
+![](https://user-images.githubusercontent.com/29258204/178261831-ee9e4744-5b80-443f-9dcc-5913dcaaca49.png)
+
+
+Then, put your Photon AppId into AppId and Photon Voice AppId itno VoiceAppId, then put in a region - the default is "eu".
 
 Then drag in your controllers and headset into Head, Left Hand and Right Hand - set the colour to the default colour.
 

@@ -4,7 +4,7 @@ A Unity Package containing all the necessary components to do VR networking with
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
 
-You need to have [PUN 2](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922) and [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) in your project before importing this
+You need to have [PUN 2](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922) and [Photon Voice 2](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) in your project before importing this
 You also need TextMeshPro - that's built into unity, you just gotta go into the Player prefab and press Import TMP Essentials.
 
 ![](https://user-images.githubusercontent.com/29258204/178261709-e87f2177-d4bc-4878-91ae-5d2d52d5081c.png)

@@ -77,7 +77,8 @@ Color myColour = new Color(0, 0, 1);
 PhotonVRManager.SetColour(myColour);
 ```
 
-<b>Cosmetics</b>
+<b>Cosmetics - not out yet</b>
+
 Every body part on the player has a child named "Cosmetics", under those you put the models of the cosmetics you want.
 You have to rename the object to the ID of the cosmetic, let's say you put on a hat with the ID "VRTopHat" then under the Cosmetics child of the head you put your model and name it "VRTopHat", like this:
 

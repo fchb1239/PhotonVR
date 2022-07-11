@@ -65,6 +65,18 @@ int maxPlayers = 8;
 PhotonVRManager.SwitchScenes(SceneIndex, maxPlayers);
 ```
 
+Setting name
+```cs
+PhotonVRManager.SetName("fchb1239");
+```
+
+
+Setting colour
+```cs
+Color myColour = new Color(0, 0, 1);
+PhotonVRManager.SetColour(myColour);
+```
+
 <b>Cosmetics</b>
 Every body part on the player has a child named "Cosmetics", under those you put the models of the cosmetics you want.
 You have to rename the object to the ID of the cosmetic, let's say you put on a hat with the ID "VRTopHat" then under the Cosmetics child of the head you put your model and name it "VRTopHat", like this:

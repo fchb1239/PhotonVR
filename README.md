@@ -77,7 +77,34 @@ Color myColour = new Color(0, 0, 1);
 PhotonVRManager.SetColour(myColour);
 ```
 
-<b>Cosmetics - not out yet</b>
+<b>Cosmetics</b>
+
+Start off by including Photon.VR.Cosmetics
+```cs
+include Photon.VR.Cosmetics;
+```
+
+To put on cosmetics you can use two functions to do the job. You can put on an entire set like so
+```cs
+PhotonVRManager.SetCosmetics(new PhotonVRCosmeticsData()
+{
+    Head = "VRTopHat",
+    Face = "VRSunglasses",
+    LeftHand = "VRGlove",
+    RightHand = "VRGlove"
+});
+```
+
+Or if you want to do one at a time (like if you have a button with a specefic cosmetic) then do like so
+```cs
+PhotonVRManager.SetCosmetic(CosmeticType.Head, "VRTopHat");
+```
+
+If you set a cosmetic part to a cosmetic that doesn't exit, it won't equip anything. So if you want to clear the head of cosmetics do like so
+```cs
+PhotonVRManager.SetCosmetic(CosmeticType.Head, "");
+```
+It's the same story with SetCosmetics.
 
 Every body part on the player has a child named "Cosmetics", under those you put the models of the cosmetics you want.
 You have to rename the object to the ID of the cosmetic, let's say you put on a hat with the ID "VRTopHat" then under the Cosmetics child of the head you put your model and name it "VRTopHat", like this:

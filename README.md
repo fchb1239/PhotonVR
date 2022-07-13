@@ -106,7 +106,7 @@ PhotonVRManager.SetCosmetic(CosmeticType.Head, "");
 ```
 It's the same story with SetCosmetics.
 
-Every body part on the player has a child named "Cosmetics", under those you put the models of the cosmetics you want.
+Every body part on the player has a child named something with "Cosmetics", under those you put the models of the cosmetics you want.
 You have to rename the object to the ID of the cosmetic, let's say you put on a hat with the ID "VRTopHat" then under the Cosmetics child of the head you put your model and name it "VRTopHat", like this:
 
 ![](https://user-images.githubusercontent.com/29258204/178257224-254c10c5-e68a-4fd9-97f4-308896e62bf7.png)

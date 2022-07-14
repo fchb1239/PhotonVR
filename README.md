@@ -81,7 +81,7 @@ PhotonVRManager.SetColour(myColour);
 
 Start off by including Photon.VR.Cosmetics
 ```cs
-include Photon.VR.Cosmetics;
+using Photon.VR.Cosmetics;
 ```
 
 To put on cosmetics you can use two functions to do the job. You can put on an entire set like so

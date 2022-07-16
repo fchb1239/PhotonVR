@@ -67,7 +67,7 @@ PhotonVRManager.SwitchScenes(SceneIndex, maxPlayers);
 
 Setting name
 ```cs
-PhotonVRManager.SetName("fchb1239");
+PhotonVRManager.SetUsername("fchb1239");
 ```
 
 

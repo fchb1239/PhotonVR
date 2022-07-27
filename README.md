@@ -54,7 +54,7 @@ Joining private rooms
 string roomCode = "1234";
 // Optional
 int maxPlayers = 8;
-PhotonVRManagerJoinPrivateRoom(roomName, maxPlayers);
+PhotonVRManager.JoinPrivateRoom(roomName, maxPlayers);
 ```
 
 Switching scenes

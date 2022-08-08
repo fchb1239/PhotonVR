@@ -81,6 +81,34 @@ namespace Photon.VR
                 return false;
             }
 
+            PhotonNetwork.AuthValues = null;
+
+            Manager.State = ConnectionState.Connecting;
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = Manager.AppId;
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = Manager.VoiceAppId;
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = Manager.Region;
+            PhotonNetwork.ConnectUsingSettings();
+            Debug.Log($"Connecting - AppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime} VoiceAppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            return true;
+        }
+
+        /// <summary>
+        /// Connects to Photon using the specified AppId and VoiceAppId with authentication
+        /// </summary>
+        public static bool ConnectAuthenticated(string username, string token)
+        {
+            if (string.IsNullOrEmpty(Manager.AppId) || string.IsNullOrEmpty(Manager.VoiceAppId))
+            {
+                Debug.LogError("Please input an app id");
+                return false;
+            }
+
+            AuthenticationValues authentication = new AuthenticationValues { AuthType = CustomAuthenticationType.Custom };
+            authentication.AddAuthParameter("username", username);
+            authentication.AddAuthParameter("token", token);
+            PhotonNetwork.AuthValues = authentication;
+
+
             Manager.State = ConnectionState.Connecting;
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = Manager.AppId;
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = Manager.VoiceAppId;
@@ -109,6 +137,19 @@ namespace Photon.VR
             Manager.AppId = Id;
             Manager.VoiceAppId = VoiceId;
             Connect();
+        }
+
+        /// <summary>
+        /// Changes Photon servers
+        /// </summary>
+        /// <param name=Id">The new AppId</param>
+        /// <param name="VoiceId">The new VoiceAppId</param>
+        public static void ChangeServersAuthenticated(string Id, string VoiceId, string username, string token)
+        {
+            PhotonNetwork.Disconnect();
+            Manager.AppId = Id;
+            Manager.VoiceAppId = VoiceId;
+            ConnectAuthenticated(username, token);
         }
 
         /// <summary>

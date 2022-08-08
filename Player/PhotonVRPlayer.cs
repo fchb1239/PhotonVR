@@ -84,7 +84,8 @@ namespace Photon.VR.Player
             // Colour
             foreach (MeshRenderer renderer in ColourObjects)
             {
-                renderer.material.color = JsonUtility.FromJson<Color>((string)photonView.Owner.CustomProperties["Colour"]);
+                if(renderer != null)
+                    renderer.material.color = JsonUtility.FromJson<Color>((string)photonView.Owner.CustomProperties["Colour"]);
             }
 
             // Cosmetics - it's a little ugly to look at

@@ -40,6 +40,22 @@ Switching Photon servers
 PhotonVRManager.ChangeServers("AppId", "VoiceAppId");
 ```
 
+Connecting to the servers authenticated
+```cs
+// These will not actually work, you need to set this up with [PlayFab](https://docs.microsoft.com/en-us/gaming/playfab/sdks/photon/quickstart) or something else
+string username = "MYID";
+string token = "MYTOKEN";
+PhotonVRManager.ConnectAuthenticated(username, token);
+```
+
+Switching Photon servers
+```cs
+// These will not actually work, you need to set this up with [PlayFab](https://docs.microsoft.com/en-us/gaming/playfab/sdks/photon/quickstart) or something else
+string username = "MYID";
+string token = "MYTOKEN";
+PhotonVRManager.ChangeServersAuthenticated(username, token);
+```
+
 Joining rooms
 ```cs
 // It will only join people on the same queue but the room codes themselves are random

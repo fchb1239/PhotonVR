@@ -53,7 +53,7 @@ Switching Photon servers
 // These will not actually work, you need to set this up with PlayFab or something else
 string username = "MYID";
 string token = "MYTOKEN";
-PhotonVRManager.ChangeServersAuthenticated(username, token);
+PhotonVRManager.ChangeServersAuthenticated("AppId", "VoiceAppId", username, token);
 ```
 
 [PlayFab Photon authentication documentation](https://docs.microsoft.com/en-us/gaming/playfab/sdks/photon/quickstart)

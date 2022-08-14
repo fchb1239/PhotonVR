@@ -11,6 +11,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice;
 
+using ExitGames.Client.Photon;
+
 namespace Photon.VR
 {
     public class PhotonVRManager : MonoBehaviourPunCallbacks
@@ -173,7 +175,9 @@ namespace Photon.VR
         public static void SetColour(Color PlayerColour)
         {
             Manager.Colour = PlayerColour;
-            PhotonNetwork.LocalPlayer.CustomProperties["Colour"] = JsonUtility.ToJson(PlayerColour);
+            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            hash["Colour"] = JsonUtility.ToJson(PlayerColour);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PlayerPrefs.SetString("Colour", JsonUtility.ToJson(PlayerColour));
 
             if (PhotonNetwork.InRoom)
@@ -188,7 +192,9 @@ namespace Photon.VR
         public static void SetCosmetics(PhotonVRCosmeticsData PlayerCosmetics)
         {
             Manager.Cosmetics = PlayerCosmetics;
-            PhotonNetwork.LocalPlayer.CustomProperties["Cosmetics"] = JsonUtility.ToJson(PlayerCosmetics);
+            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            hash["Cosmetics"] = JsonUtility.ToJson(PlayerCosmetics);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PlayerPrefs.SetString("Cosmetics", JsonUtility.ToJson(PlayerCosmetics));
 
             if (PhotonNetwork.InRoom)
@@ -226,7 +232,9 @@ namespace Photon.VR
                     break;
             }
             Manager.Cosmetics = Cosmetics;
-            PhotonNetwork.LocalPlayer.CustomProperties["Cosmetics"] = JsonUtility.ToJson(Cosmetics);
+            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            hash["Cosmetics"] = JsonUtility.ToJson(Cosmetics);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PlayerPrefs.SetString("Cosmetics", JsonUtility.ToJson(Cosmetics));
 
             if (PhotonNetwork.InRoom)

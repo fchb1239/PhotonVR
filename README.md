@@ -1,6 +1,8 @@
 # ![](Visuals/SmallerText.png)
 A Unity Package containing all the necessary components to do VR networking with [Photon](https://photonengine.com)
 
+[Download](https://github.com/fchb1239/PhotonVR/releases/newest)
+
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
 

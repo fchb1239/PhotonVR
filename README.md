@@ -2,6 +2,7 @@
 A Unity Package containing all the necessary components to do VR networking with [Photon](https://photonengine.com)
 
 [![Download](https://img.shields.io/badge/Download-blue.svg)](https://github.com/fchb1239/PhotonVR/releases)
+[![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/rRvnU846Bf)
 
 # Documentation
 By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.

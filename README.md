@@ -18,7 +18,7 @@ Start off by going in Resources/PhotonVR/Prefabs and dragging everything in ther
 ![](https://user-images.githubusercontent.com/29258204/178261831-ee9e4744-5b80-443f-9dcc-5913dcaaca49.png)
 
 
-Then, put your Photon AppId into AppId and Photon Voice AppId itno VoiceAppId, then put in a region - the default is "eu".
+Then, put your Photon AppId into AppId and Photon Voice AppId into VoiceAppId, then put in a region - the default is "eu". Click [here](https://doc.photonengine.com/en-us/pun/current/connection-and-authentication/regions) to see a list of regions
 
 Then drag in your controllers and headset into Head, Left Hand and Right Hand - set the colour to the default colour.
 

@@ -51,7 +51,7 @@ string token = "MYTOKEN";
 PhotonVRManager.ConnectAuthenticated(username, token);
 ```
 
-Switching Photon servers
+Switching Photon servers authenticated
 ```cs
 // These will not actually work, you need to set this up with PlayFab or something else
 string username = "MYID";

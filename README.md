@@ -5,7 +5,7 @@ A Unity Package containing all the necessary components to do VR networking with
 [![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/rRvnU846Bf)
 
 # Documentation
-By default everything is set up for a super simple system, obvisouly you can code some stuff yourself to make everything work for your application.
+By default everything is set up for a super simple system, obviously you can code some stuff yourself to make everything work for your application.
 
 You need to have [PUN 2](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922) and [Photon Voice 2](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) in your project before importing this
 You also need TextMeshPro - that's built into unity, you just gotta go into the Player prefab and press Import TMP Essentials.

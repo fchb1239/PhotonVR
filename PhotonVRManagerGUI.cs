@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 using UnityEditor;
 
 using Photon.Pun;
+using UnityEditor.Experimental.SceneManagement;
 
 namespace Photon.VR
 {
@@ -26,6 +27,11 @@ namespace Photon.VR
             GUILayout.Label(new GUIContent() { image = logo });
 
             PhotonVRManager manager = (PhotonVRManager)target;
+
+            if (PrefabStageUtility.GetCurrentPrefabStage() == null)
+            {
+                manager.CheckDefaultValues();
+            }
 
             base.OnInspectorGUI();
             GUILayout.Space(10);

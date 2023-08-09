@@ -6,12 +6,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Photon.VR.Player;
-using Photon.VR.Cosmetics;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice;
 
 using ExitGames.Client.Photon;
+using Photon.VR.Saving;
 
 namespace Photon.VR
 {
@@ -30,7 +30,7 @@ namespace Photon.VR
         public Transform LeftHand;
         public Transform RightHand;
         public Color Colour;
-        public PhotonVRCosmeticsData Cosmetics { get; private set; } = new PhotonVRCosmeticsData();
+        public Dictionary<string, string> Cosmetics { get; private set; } = new Dictionary<string, string>();
 
         [Header("Networking")]
         public string DefaultQueue = "Default";
@@ -68,9 +68,74 @@ namespace Photon.VR
             if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Colour")))
                 Colour = JsonUtility.FromJson<Color>(PlayerPrefs.GetString("Colour"));
             if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Cosmetics")))
-                Cosmetics = JsonUtility.FromJson<PhotonVRCosmeticsData>(PlayerPrefs.GetString("Cosmetics"));
+                Cosmetics = PhotonVRValueSaver.GetDictionary("Cosmetics");
 
         }
+
+#if UNITY_EDITOR
+        public void CheckDefaultValues()
+        {
+            bool b = CheckForRig(this);
+            if (b)
+            {
+                if (string.IsNullOrEmpty(AppId))
+                    AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdFusion;
+
+                if (string.IsNullOrEmpty(VoiceAppId))
+                    VoiceAppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
+
+                Debug.Log("Attempted to set default values");
+            }
+        }
+
+        private bool CheckForRig(PhotonVRManager manager)
+        {
+            GameObject[] objects = FindObjectsOfType<GameObject>();
+
+            bool b = false;
+
+            if (manager.Head == null)
+            {
+                b = true;
+                foreach (GameObject obj in objects)
+                {
+                    if (obj.name.Contains("Camera") || obj.name.Contains("Head"))
+                    {
+                        manager.Head = obj.transform;
+                        break;
+                    }
+                }
+            }
+
+            if (manager.LeftHand == null)
+            {
+                b = true;
+                foreach (GameObject obj in objects)
+                {
+                    if (obj.name.Contains("Left") && (obj.name.Contains("Hand") || obj.name.Contains("Controller")))
+                    {
+                        manager.LeftHand = obj.transform;
+                        break;
+                    }
+                }
+            }
+
+            if (manager.RightHand == null)
+            {
+                b = true;
+                foreach (GameObject obj in objects)
+                {
+                    if (obj.name.Contains("Right") && (obj.name.Contains("Hand") || obj.name.Contains("Controller")))
+                    {
+                        manager.RightHand = obj.transform;
+                        break;
+                    }
+                }
+            }
+
+            return b;
+        }
+#endif
 
         /// <summary>
         /// Connects to Photon using the specified AppId and VoiceAppId
@@ -189,13 +254,13 @@ namespace Photon.VR
         /// Sets the cosmetics
         /// </summary>
         /// <param name="PlayerCosmetics">The cosmetics you want to set</param>
-        public static void SetCosmetics(PhotonVRCosmeticsData PlayerCosmetics)
+        public static void SetCosmetics(Dictionary<string, string> PlayerCosmetics)
         {
             Manager.Cosmetics = PlayerCosmetics;
             ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
-            hash["Cosmetics"] = JsonUtility.ToJson(PlayerCosmetics);
+            hash["Cosmetics"] = Manager.Cosmetics;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-            PlayerPrefs.SetString("Cosmetics", JsonUtility.ToJson(PlayerCosmetics));
+            PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics);
 
             if (PhotonNetwork.InRoom)
                 if (Manager.LocalPlayer != null)
@@ -206,36 +271,13 @@ namespace Photon.VR
         /// Sets a specefic cosmetic
         /// </summary>
         /// <param name="Type">The type of cosmetic you want to set</param>
-        public static void SetCosmetic(CosmeticType Type, string CosmeticId)
+        public static void SetCosmetic(string Type, string CosmeticId)
         {
-            PhotonVRCosmeticsData Cosmetics = Manager.Cosmetics;
-            switch (Type)
-            {
-                case CosmeticType.Head:
-                    Cosmetics.Head = CosmeticId;
-                    break;
-                case CosmeticType.Face:
-                    Cosmetics.Face = CosmeticId;
-                    break;
-                case CosmeticType.Body:
-                    Cosmetics.Body = CosmeticId;
-                    break;
-                case CosmeticType.BothHands:
-                    Cosmetics.LeftHand = CosmeticId;
-                    Cosmetics.RightHand = CosmeticId;
-                    break;
-                case CosmeticType.LeftHand:
-                    Cosmetics.LeftHand = CosmeticId;
-                    break;
-                case CosmeticType.RightHand:
-                    Cosmetics.RightHand = CosmeticId;
-                    break;
-            }
-            Manager.Cosmetics = Cosmetics;
+            Manager.Cosmetics[Type] = CosmeticId;
             ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
-            hash["Cosmetics"] = JsonUtility.ToJson(Cosmetics);
+            hash["Cosmetics"] = Manager.Cosmetics;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-            PlayerPrefs.SetString("Cosmetics", JsonUtility.ToJson(Cosmetics));
+            PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics);
 
             if (PhotonNetwork.InRoom)
                 if (Manager.LocalPlayer != null)
@@ -249,7 +291,7 @@ namespace Photon.VR
 
             PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString("Username");
             PhotonNetwork.LocalPlayer.CustomProperties["Colour"] = JsonUtility.ToJson(Colour);
-            PhotonNetwork.LocalPlayer.CustomProperties["Cosmetics"] = JsonUtility.ToJson(Cosmetics);
+            PhotonNetwork.LocalPlayer.CustomProperties["Cosmetics"] = Cosmetics;
 
             if (JoinRoomOnConnect)
                 JoinRandomRoom(DefaultQueue, DefaultRoomLimit);

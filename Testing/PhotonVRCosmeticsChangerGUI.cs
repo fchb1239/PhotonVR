@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEditor;
 
 using Photon.Pun;
-using Photon.VR.Cosmetics;
 
 namespace Photon.VR.Testing
 {
@@ -19,7 +18,16 @@ namespace Photon.VR.Testing
                 base.OnInspectorGUI();
                 PhotonVRCosmeticsChanger manager = (PhotonVRCosmeticsChanger)target;
                 if (GUILayout.Button("Change"))
-                    manager.ChangeCosmetics(manager.Cosmetics);
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+                    foreach (var cosmetic in manager.Cosmetics)
+                    {
+                        dictionary.Add(cosmetic.SlotName, cosmetic.Cosmetic);
+                    }
+
+                    manager.ChangeCosmetics(dictionary);
+                }
             }
             else
             {

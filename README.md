@@ -100,30 +100,24 @@ PhotonVRManager.SetColour(myColour);
 
 <b>Cosmetics</b>
 
-Start off by including Photon.VR.Cosmetics
-```cs
-using Photon.VR.Cosmetics;
-```
-
 To put on cosmetics you can use two functions to do the job. You can put on an entire set like so
 ```cs
-PhotonVRManager.SetCosmetics(new PhotonVRCosmeticsData()
+PhotonVRManager.SetCosmetics(new Dictionary<string, string>
 {
-    Head = "VRTopHat",
-    Face = "VRSunglasses",
-    LeftHand = "VRGlove",
-    RightHand = "VRGlove"
+    { "Head", "VRTopHat" },
+    { "Face", "VRSunglasses" }
+    // And so on
 });
 ```
 
 Or if you want to do one at a time (like if you have a button with a specefic cosmetic) then do like so
 ```cs
-PhotonVRManager.SetCosmetic(CosmeticType.Head, "VRTopHat");
+PhotonVRManager.SetCosmetic("Head", "VRTopHat");
 ```
 
 If you set a cosmetic part to a cosmetic that doesn't exit, it won't equip anything. So if you want to clear the head of cosmetics do like so
 ```cs
-PhotonVRManager.SetCosmetic(CosmeticType.Head, "");
+PhotonVRManager.SetCosmetic("Head", "");
 ```
 It's the same story with SetCosmetics.
 

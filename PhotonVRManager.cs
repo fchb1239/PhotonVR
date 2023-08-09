@@ -26,10 +26,10 @@ namespace Photon.VR
         public string Region = "eu";
 
         [Header("Player")]
-        public Transform Head;
-        public Transform LeftHand;
         public Transform RightHand;
         public Color Colour;
+        public Transform Head;
+        public Transform LeftHand;
         public PhotonVRCosmeticsData Cosmetics { get; private set; } = new PhotonVRCosmeticsData();
 
         [Header("Networking")]
@@ -42,6 +42,9 @@ namespace Photon.VR
         public bool ConnectOnAwake = true;
         [Tooltip("If the user shall join a room when they connect")]
         public bool JoinRoomOnConnect = true;
+        [ToolTip("Disable or Enable if the Manager should Log")]
+        public bool log;
+
 
         [NonSerialized]
         public PhotonVRPlayer LocalPlayer;
@@ -90,7 +93,10 @@ namespace Photon.VR
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = Manager.VoiceAppId;
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = Manager.Region;
             PhotonNetwork.ConnectUsingSettings();
-            Debug.Log($"Connecting - AppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime} VoiceAppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            if (!log)
+            {
+                Debug.Log($"Connecting - AppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime} VoiceAppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            }
             return true;
         }
 
@@ -116,7 +122,10 @@ namespace Photon.VR
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = Manager.VoiceAppId;
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = Manager.Region;
             PhotonNetwork.ConnectUsingSettings();
-            Debug.Log($"Connecting - AppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime} VoiceAppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            if (!log)
+            {
+                Debug.Log($"Connecting - AppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime} VoiceAppId: {PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice}");
+            }
             return true;
         }
 
@@ -311,7 +320,10 @@ namespace Photon.VR
             Manager.options = roomOptions;
 
             PhotonNetwork.JoinRandomRoom(hastable, (byte)roomOptions.MaxPlayers, MatchmakingMode.RandomMatching, null, null, null);
-            Debug.Log($"Joining random with type {hastable["queue"]}");
+            if (!log)
+            {
+                Debug.Log($"Joining random with type {hastable["queue"]}");
+            }
         }
 
         /// <summary>
@@ -336,12 +348,14 @@ namespace Photon.VR
                 IsOpen = true,
                 MaxPlayers = (byte)MaxPlayers
             }, null, null);
-            Debug.Log($"Joining a private room: {RoomId}");
+            if(!log)
+                Debug.Log($"Joining a private room: {RoomId}");
         }
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("Joined a room");
+            if (!log)
+                Debug.Log("Joined a room");
             State = ConnectionState.InRoom;
         }
 
@@ -349,17 +363,20 @@ namespace Photon.VR
         {
             base.OnDisconnected(cause);
             State = ConnectionState.Disconnected;
-            Debug.Log("Disconnected from server");
+            if (!log)
+                Debug.Log("Disconnected from server");
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message) => HandleJoinError();
 
         private void HandleJoinError()
         {
-            Debug.Log("Failed to join room - creating a new one");
+            if (!log)
+                Debug.Log("Failed to join room - creating a new one");
 
             string roomCode = CreateRoomCode();
-            Debug.Log($"Joining {roomCode}");
+            if (!log)
+                Debug.Log($"Joining {roomCode}");
             PhotonNetwork.CreateRoom(roomCode, options, null, null);
         }
 

@@ -121,6 +121,14 @@ PhotonVRManager.SetCosmetic("Head", "");
 ```
 It's the same story with SetCosmetics.
 
+If you want to get the name of the cosmetic in a certain slot then do like so
+```cs
+PhotonVRManager.GetCosmetic("Head");
+```
+As an example:
+```cs
+if(PhotonVRManager.GetCosmetic("Head") == "VRTopHat")
+```
 Every body part on the player has a child named something with "Cosmetics", under those you put the models of the cosmetics you want.
 You have to rename the object to the ID of the cosmetic, let's say you put on a hat with the ID "VRTopHat" then under the Cosmetics child of the head you put your model and name it "VRTopHat", like this:
 

@@ -413,6 +413,15 @@ namespace Photon.VR
         {
             return new System.Random().Next(99999).ToString();
         }
+
+        public static string GetCosmetic(string cosmeticType)// Gets name of current cosmetic in a slot
+        {
+            if (Manager.Cosmetics.ContainsKey(cosmeticType))
+            {
+                return Manager.Cosmetics[cosmeticType];
+            }
+            return null;
+        }
     }
 
     public enum ConnectionState

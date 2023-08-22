@@ -5,11 +5,18 @@ using UnityEngine;
 public class PhotonVRPlayerBody : MonoBehaviour
 {
     public Transform Head;
-    public float Offset;
+    [Tooltip("Enable this if you want the body to line up with the default gorilla locomotion hitbox")]
+    public bool GorillaLocomotion;
+
+    private void Start() {
+        transform.parent = Head;
+        if (GorillaLocomotion){
+            transform.localScale = new Vector3(0,-0.24f,-0.06f);
+        }
+    }
 
     private void Update()
     {
-        transform.rotation = new Quaternion(0, Head.rotation.y, 0, Head.rotation.w);
-        transform.position = new Vector3(Head.position.x, Head.position.y + Offset, Head.position.z);
+        transform.eulerAngles = new Vector3(0, Head.eulerAngles.y, 0);
     }
 }

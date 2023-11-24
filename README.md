@@ -126,4 +126,21 @@ You have to rename the object to the ID of the cosmetic, let's say you put on a 
 
 ![](https://user-images.githubusercontent.com/29258204/178257224-254c10c5-e68a-4fd9-97f4-308896e62bf7.png)
 
+To get the name of a cosmetic in a certain spot, use:
+```cs
+PhotonVRManager.GetCosmetic("Head");
+```
+Or for a dictionary of all current cosmetics:
+```cs
+PhotonVRManager.GetCosmetics();
+```
+
+When not connected to a room, your player model won't appear. To make PhotonVR automatically attempt to create an offline player model, enable the "Auto Offline Player" option in PhotonVRManager. Warning: This may not work if some scripts on the player prefab require an online connection.
+
+To check if you're currently using an offline player, use:
+```cs
+PhotonVRManager.UsingOffline();
+```
+
+
 

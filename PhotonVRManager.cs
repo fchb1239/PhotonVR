@@ -42,11 +42,19 @@ namespace Photon.VR
         public bool ConnectOnAwake = true;
         [Tooltip("If the user shall join a room when they connect")]
         public bool JoinRoomOnConnect = true;
+        [Tooltip("Spawns player prefab before joining a room")]
+        public bool AutoOfflinePlayer = false;
 
         [NonSerialized]
         public PhotonVRPlayer LocalPlayer;
 
         private RoomOptions options;
+
+        private string PlayerPrefab;
+
+        private GameObject OfflinePlayer;
+        [NonSerialized]
+        public bool Offline;
 
         private ConnectionState State = ConnectionState.Disconnected;
 
@@ -59,7 +67,10 @@ namespace Photon.VR
                 Debug.LogError("There can't be multiple PhotonVRManagers in a scene");
                 Application.Quit();
             }
-
+            PlayerSpawner playerspawner = FindObjectOfType<PlayerSpawner>();
+            if (playerspawner){
+                PlayerPrefab = playerspawner.PrefabLocation;
+            }
             DontDestroyOnLoad(gameObject);
 
             if (ConnectOnAwake)
@@ -69,6 +80,8 @@ namespace Photon.VR
                 Colour = JsonUtility.FromJson<Color>(PlayerPrefs.GetString("Colour"));
             if (!string.IsNullOrEmpty(PlayerPrefs.GetString("Cosmetics")))
                 Cosmetics = PhotonVRValueSaver.GetDictionary("Cosmetics");
+            if (AutoOfflinePlayer)
+                MakeOfflineModel();
 
         }
 
@@ -233,6 +246,15 @@ namespace Photon.VR
                     Manager.LocalPlayer.RefreshPlayerValues();
         }
 
+        public static string GetCosmetic(string cosmeticType)   // Gets name of current cosmetic in a slot
+        {
+            if (Manager.Cosmetics.ContainsKey(cosmeticType))
+            {
+                return Manager.Cosmetics[cosmeticType];
+            }
+            return null;
+        }
+
         /// <summary>
         /// Sets the colour
         /// </summary>
@@ -277,8 +299,7 @@ namespace Photon.VR
             ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
             hash["Cosmetics"] = Manager.Cosmetics;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-            PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics);
-
+            PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics); 
             if (PhotonNetwork.InRoom)
                 if (Manager.LocalPlayer != null)
                     Manager.LocalPlayer.RefreshPlayerValues();
@@ -385,6 +406,10 @@ namespace Photon.VR
         {
             Debug.Log("Joined a room");
             State = ConnectionState.InRoom;
+            if(Offline && OfflinePlayer != null)
+                    Destroy(OfflinePlayer);
+                    OfflinePlayer = null;
+                    Offline = false;
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -392,6 +417,7 @@ namespace Photon.VR
             base.OnDisconnected(cause);
             State = ConnectionState.Disconnected;
             Debug.Log("Disconnected from server");
+            
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message) => HandleJoinError();
@@ -412,6 +438,17 @@ namespace Photon.VR
         public string CreateRoomCode()
         {
             return new System.Random().Next(99999).ToString();
+        }
+
+        private void MakeOfflineModel(){
+            if (State != ConnectionState.InRoom && PlayerPrefab != null && OfflinePlayer == null){
+                Offline=true;
+                OfflinePlayer = (GameObject)Instantiate(Resources.Load(PlayerPrefab), Vector3.zero, Quaternion.identity);
+            }
+        }
+
+        public static bool UsingOfflineModel(){
+            return Manager.Offline;
         }
     }
 

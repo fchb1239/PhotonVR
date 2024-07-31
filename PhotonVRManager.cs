@@ -240,7 +240,7 @@ namespace Photon.VR
         public static void SetColour(Color PlayerColour)
         {
             Manager.Colour = PlayerColour;
-            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
             hash["Colour"] = JsonUtility.ToJson(PlayerColour);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PlayerPrefs.SetString("Colour", JsonUtility.ToJson(PlayerColour));
@@ -257,7 +257,7 @@ namespace Photon.VR
         public static void SetCosmetics(Dictionary<string, string> PlayerCosmetics)
         {
             Manager.Cosmetics = PlayerCosmetics;
-            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
             hash["Cosmetics"] = Manager.Cosmetics;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics);
@@ -274,7 +274,7 @@ namespace Photon.VR
         public static void SetCosmetic(string Type, string CosmeticId)
         {
             Manager.Cosmetics[Type] = CosmeticId;
-            ExitGames.Client.Photon.Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
             hash["Cosmetics"] = Manager.Cosmetics;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             PhotonVRValueSaver.SaveDictionary("Cosmetics", Manager.Cosmetics);
@@ -290,8 +290,11 @@ namespace Photon.VR
             Debug.Log("Connected");
 
             PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString("Username");
-            PhotonNetwork.LocalPlayer.CustomProperties["Colour"] = JsonUtility.ToJson(Colour);
-            PhotonNetwork.LocalPlayer.CustomProperties["Cosmetics"] = Cosmetics;
+
+            ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
+            hash["Colour"] = JsonUtility.ToJson(Colour);
+            hash["Cosmetics"] = Cosmetics;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
             if (JoinRoomOnConnect)
                 JoinRandomRoom(DefaultQueue, DefaultRoomLimit);
